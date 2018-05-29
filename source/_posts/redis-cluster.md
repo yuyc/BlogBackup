@@ -2,15 +2,16 @@
 title: redis主从部署
 date: 2018-04-28 21:54:52
 tags: 
-    - redis
-    - 主从配置
+    - redis cluster
 ---
 
-# redis主从部署
 安装就不说了，详见《redis3.X安装》
-## 基础配置
+#####  基础配置
 创建`6379`,`6380`两个文件夹，分别拷贝一份`redis.conf`,`redis-server`
-## 主从配置
+#####  主从配置
+
+<!-- more -->
+
 ```
 #我们看一下redis的从服务器配置
 [root@centos6 6380]# grep -E -v "(^$|^#)" redis.conf
@@ -81,7 +82,7 @@ aof-rewrite-incremental-fsync yes
 ```
 主从使用的就`slaveof`,`masterauth`这两项基础配置，其他可根据需要进行填写。
 至于master的配置就不贴了，默认的配置即可，主要是`requirepass`设置下认证密码。
-## 启动服务
+##### 启动服务
 ```
 分别启动master、slave
 #redis-server redis.conf
@@ -90,7 +91,7 @@ aof-rewrite-incremental-fsync yes
 >info repcliation
 
 ```
-## 测试主从
+##### 测试主从
 ```
 [root@centos6 6380]# /usr/local/src/redis-3.0.7/src/redis-cli
 127.0.0.1:6379> auth foot
@@ -108,4 +109,4 @@ OK
 127.0.0.1:6380>
 
 ```
-## 完成
+##### 完成
